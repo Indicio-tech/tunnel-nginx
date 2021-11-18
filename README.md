@@ -12,6 +12,7 @@ docker run -d \
     --restart always \
     --net host \
     -v $HOME/ssl:/etc/nginx/ssl/ \
+    -v $HOME/www:/var/www \
     defunctzombie/localtunnel-nginx:latest
 ```
 
@@ -26,5 +27,14 @@ docker run \
     --restart always \
     -p 443:443 -p 80:80 \
     -v ./ssl:/etc/nginx/ssl/ \
+    -v ./www:/var/www \
     localtunnel-nginx
 ```
+
+## Calling certbot
+
+```
+certbot --manual --preferred-challenges=dns --config-dir /home/tunnel/ssl/  certonly -d *.example.com
+```
+
+Then manually update certs in site.conf and rebuild
